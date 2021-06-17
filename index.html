@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <title>Virtual Boxe Treino</title>
+</head>
+<body>
+<!-- Menu superior -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Virtual Boxe Simulador</a>
+</nav>
+
+
+  <div  class="container bg-secondary">
+    <span>Periodo De Treino</span>
+    <input type="number" class="form-control" name="" id="tempo" value="60" min="60" max="120" >
+    <br>
+    <input type="range" class="form-range" name="" id="velocidade" value="0" min="0" max="900">
+    <br>
+    <div id="golpe">
+      GOLPE
+    </div>
+    <div class="form-group">
+      <label for="jab" class="form-check-label">JAB</label>
+      <input type="checkbox"  id="jab" class="form-check-input" checked disabled>
+      <label for="direto" class="form-check-label">DIRETO</label>
+      <input type="checkbox"  id="direto" class="form-check-input" checked disabled>
+      <label for="cruzado" class="form-check-label">CRUZADO</label>
+      <input type="checkbox"  id="cruzado" class="form-check-input" checked>
+      <label for="gancho" class="form-check-label">GANCHO</label>
+      <input type="checkbox"  id="gancho" class="form-check-input"  checked>
+      <label for="upper" class="form-check-label">UPPER</label>
+      <input type="checkbox"  id="upper" class="form-check-input" checked>
+    </div>
+    <div class="form-group">
+
+    </div>
+    <br>
+    <div class="btn">
+      <input type="button" name="" onclick="MyTime(true)" value="Iniciar" class="btn btn-danger lg">
+      <input type="button" name="" onclick="MyTime(false)" value="Parar" class="btn btn-primary">
+    </div>
+    <br>
+    <a class="btn btn-sucess" href="https://www.instagram.com/mauricio_rodrigues_21/">@Autor</a>
+  </div>
+
+<script type="text/javascript">
+          // Variaveis Global
+var Golpe = document.getElementById('golpe');
+var tempo = document.getElementById('tempo').value;
+var tempoVariavel = document.getElementById('tempo');
+
+var count = 1
+
+function MyTime(ativo) {
+  if(ativo){
+  let VelocidadeInicial = document.getElementById('velocidade').value;
+  const VelocidadeFinal = 1000 - VelocidadeInicial;
+
+                  // GOLPES
+let jab = document.getElementById('jab');
+let direto = document.getElementById("direto");
+let cruzado = document.getElementById('cruzado');
+let gancho = document.getElementById('gancho');
+let upper = document.getElementById('upper');
+
+  var timer = setTimeout(function(){
+    tempoVariavel.value = tempoVariavel.value - 1
+    var rodom = Math.floor(Math.random() * 5);
+
+                 //Checagem
+      if(rodom == 2 && !cruzado.checked){
+        rodom ++
+      }
+      if(rodom == 3 && !gancho.checked){
+        rodom ++
+      }
+      if(rodom == 4 && !upper.checked){
+        if(cruzado.checked){
+          rodom = 2;
+        }else if(gancho.checked){
+          rodom = 3
+        }else if(jab.checked){
+          rodom = 0;
+        }else if (direto.checked){
+          rodom = 1;
+        }
+      }
+    count++;
+    if(count <= tempo){
+
+        //Gerador de GOLPE
+      switch (rodom) {
+        case 0:
+          Golpe.innerHTML = "JAB"
+          break;
+        case 1:
+          Golpe.innerHTML = "DIRETO"
+          break;
+        case 2:
+          Golpe.innerHTML = "CRUZADO"
+          break;
+        case 3:
+          Golpe.innerHTML = "GANCHO"
+          break;
+        case 4:
+          Golpe.innerHTML = "UPPER"
+          break;
+        default:
+
+      }
+
+
+
+       MyTime(true);
+    }else{
+      clearTimeout(timer);
+      tempoVariavel.value = tempo;
+      count = 1
+    }
+  }, VelocidadeFinal)
+}else if(!ativo){
+  clearTimeout(timer);
+  tempoVariavel.value = tempo;
+  count = tempo;
+}
+}
+
+
+
+
+</script>
+
+
+<style media="screen">
+  *{
+    padding:0px;
+    margin:0px;
+  }
+
+  .nav-link{
+    float: inherit;
+
+
+  }
+  .container{
+    text-align: center;
+    margin-top:20px;
+    color:#fff;
+    border-radius: 5px;
+    padding: 15px;
+
+  }
+  .container label{
+    margin-left: 10px;
+  }
+.navbar-brand{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+</style>
+
+
+
+  <script src="assets/js/bootstrap.js" charset="utf-8"></script>
+  <script src="assets/js/jquery-3.6.0.min.js" charset="utf-8"></script>
+</body>
+</html>
